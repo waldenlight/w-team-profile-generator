@@ -27,8 +27,6 @@ const initialPrompts = function () {
         })
 }
 
-initialPrompts();
-
 const managerPrompts = function () {
     inquirer
         .prompt([
@@ -60,6 +58,8 @@ const managerPrompts = function () {
             addEmployee();
         })
 }
+
+managerPrompts();
 
 const engineerPrompts = function () {
     inquirer
