@@ -1,6 +1,6 @@
 // Packages
 const inquirer = require('inquirer');
-
+const fs = require('fs');
 // Classes
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -53,7 +53,32 @@ const managerPrompts = function () {
         ])
         .then((data) => {
             const manager = new Manager(data.name, data.id, data.email, data.office);
-
+            // Create HTML
+            const main = document.querySelector('<main>');
+            const employeeCard = document.createElement('div').setAttribute('class', 'employee');
+            const cardHeader = document.createElement('div').setAttribute('class', 'card-header');
+            const name = document.createElement('h2').setAttribute('class', 'name');
+            const occupation = document.createElement('h2').setAttribute('class', 'occupation');
+            const cardInfo = document.createElement('div').setAttribute('class', 'info');
+            const id = document.createElement('p').setAttribute('class', 'id');
+            const email = document.createElement('p').setAttribute('class', 'email');
+            const other = document.createElement('p').setAttribute('class', 'other');
+            // Change content within HTML
+            name.textContent = `manager.name`;
+            occupation.textContent = `Manager`;
+            id.textContent = `manager.id`;
+            email.textContent = `manager.email`;
+            office.textContent = `manager.office`;
+            // Organize HTML
+            cardHeader.appendChild(name);
+            cardHeader.appendChild(occupation);
+            cardInfo.appendChild(id);
+            cardInfo.appendChild(email);
+            cardInfo.appendChild(other);
+            employeeCard.appendChild(cardHeader);
+            employeeCard.appendChild(cardInfo);
+            // Append HTML to main
+            main.appendChild(employeeCard);
             // Reinitiates prompt loop
             addEmployee();
         })
