@@ -24,6 +24,7 @@ Takes user input to generate an html page, displaying a team profile.
 Clone the repo and run on local machine. (See Usage below)
 ## Usage
 Run node ./index.js in the terminal. After going through the prompts, an index.html will generate in the dist folder.
+[Demo Video](https://drive.google.com/file/d/1kgiW6S8v3KRVcp6ewbA96W4yIij9eCG0/view)
 ## Credits
 N/A
 ## License
