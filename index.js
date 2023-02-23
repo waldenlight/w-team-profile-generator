@@ -122,7 +122,8 @@ const internPrompts = function () {
         ])
         .then((data) => {
             const intern = new Intern(data.name, data.id, data.email, data.school);
-            employeeArray.push(manager);
+            employeeArray.push(intern);
+            console.log(intern.school)
             // Reinitiates prompt loop
             addEmployee();
         })
@@ -142,15 +143,50 @@ const addEmployee = function () {
             if (data.add == 'Yes') {
                 initialPrompts();
             } else {
-                sendData(JSON.stringify(employeeArray))
+                const manager = employeeArray[0];
+                const employeeOne = employeeArray[1];
+                // Determine whether another manager, engineer, or intern for employeeOne
+                let employeeOneOther = "Not Provided";
+                if (employeeOne.officeNum) {
+                    employeeOneOther = "Office: " + employeeOne.officeNum;
+                } else if (employeeOne.github) {
+                    employeeOneOther = "GitHub: " + employeeOne.github;
+                } else {
+                    employeeOneOther = "School: " + employeeOne.school;
+                }
+                const employeeTwo = employeeArray[2];
+                // Determine whether another manager, engineer, or intern for employeeTwo
+                let employeeTwoOther = "Not Provided";
+                if (employeeTwo.officeNum) {
+                    employeeTwoOther = "Office: " + employeeTwo.officeNum;
+                } else if (employeeTwo.github) {
+                    employeeTwoOther = "GitHub: " + employeeTwo.github;
+                } else {
+                    employeeTwoOther = "School: " + employeeTwo.school;
+                }
+                const employeeThree = employeeArray[3];
+                // Determine whether another manager, engineer, or intern for employeeThree
+                let employeeThreeOther = "Not Provided";
+                if (employeeThree.officeNum) {
+                    employeeThreeOther = "Office: " + employeeThree.officeNum;
+                } else if (employeeThree.github) {
+                    employeeThreeOther = "GitHub: " + employeeThree.github;
+                } else {
+                    employeeThreeOther = "School: " + employeeThree.school;
+                }
+                const newFile = `<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Team Profile</title><!-- Reset --><link rel='stylesheet' href='./reset.css'><!-- Styles --><link rel='stylesheet' href='./output.css'></head><body><nav><h1>My Team</h1></nav><main>` +
+                    `<div class='employee'><div class='card-header'><h2 class='name'>${manager.name}</h2><h3 class='occupation'>Manager</h3></div><div class='info'><p class='id'>Employee ID: ${manager.id}</p><p class='email'>Email: ${manager.email}</p><p class='other'>Office: ${manager.officeNum}</p></div></div>` +
+                    `<div class='employee'><div class='card-header'><h2 class='name'>${employeeOne.name}</h2><h3 class='occupation'>Manager</h3></div><div class='info'><p class='id'>Employee ID: ${employeeOne.id}</p><p class='email'>Email: ${employeeOne.email}</p><p class='other'>${employeeOneOther}</p></div></div>` +
+                    `<div class='employee'><div class='card-header'><h2 class='name'>${employeeTwo.name}</h2><h3 class='occupation'>Manager</h3></div><div class='info'><p class='id'>Employee ID: ${employeeTwo.id}</p><p class='email'>Email: ${employeeTwo.email}</p><p class='other'>${employeeTwoOther}</p></div></div>` +
+                    `<div class='employee'><div class='card-header'><h2 class='name'>${employeeThree.name}</h2><h3 class='occupation'>Manager</h3></div><div class='info'><p class='id'>Employee ID: ${employeeThree.id}</p><p class='email'>Email: ${employeeThree.email}</p><p class='other'>${employeeThreeOther}</p></div></div>` +
+                    `</main></body></html>`;
+                sendData(JSON.stringify(newFile))
             }
         })
 }
 
-// export { employeeArray };
-
-const sendData = function (data) {
-    fs.appendFile("dist/render.js", data, (err) => {
+const sendData = function (data, manager) {
+    fs.writeFile("./dist/index.html", data, (err) => {
         if (err) {
             console.log(err);
         } else {
