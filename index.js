@@ -143,6 +143,10 @@ const addEmployee = function () {
             if (data.add == 'Yes') {
                 initialPrompts();
             } else {
+                // Change emails to be links
+                for (let i = 0; i < employeeArray.length; i++) {
+                    employeeArray[i].email = `<a href='mailto:${employeeArray[i].email}'>` + employeeArray[i].email + "</a>";
+                }
                 const manager = employeeArray[0];
                 const employeeOne = employeeArray[1];
                 // Determine whether another manager, engineer, or intern for employeeOne
@@ -150,7 +154,7 @@ const addEmployee = function () {
                 if (employeeOne.officeNum) {
                     employeeOneOther = "Office: " + employeeOne.officeNum;
                 } else if (employeeOne.github) {
-                    employeeOneOther = "GitHub: " + employeeOne.github;
+                    employeeOneOther = `GitHub: <a href='https://www.github.com/${employeeOne.github}'>` + employeeOne.github + "</a>";
                 } else {
                     employeeOneOther = "School: " + employeeOne.school;
                 }
@@ -160,7 +164,7 @@ const addEmployee = function () {
                 if (employeeTwo.officeNum) {
                     employeeTwoOther = "Office: " + employeeTwo.officeNum;
                 } else if (employeeTwo.github) {
-                    employeeTwoOther = "GitHub: " + employeeTwo.github;
+                    employeeTwoOther = `GitHub: <a href='https://www.github.com/${employeeTwo.github}'>` + employeeTwo.github + "</a>";
                 } else {
                     employeeTwoOther = "School: " + employeeTwo.school;
                 }
@@ -170,7 +174,7 @@ const addEmployee = function () {
                 if (employeeThree.officeNum) {
                     employeeThreeOther = "Office: " + employeeThree.officeNum;
                 } else if (employeeThree.github) {
-                    employeeThreeOther = "GitHub: " + employeeThree.github;
+                    employeeThreeOther = `GitHub: <a href='https://www.github.com/${employeeThree.github}'>` + employeeThree.github + "</a>";
                 } else {
                     employeeThreeOther = "School: " + employeeThree.school;
                 }
