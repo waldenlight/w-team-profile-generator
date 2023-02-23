@@ -6,6 +6,9 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
+
+const employeeArray = [];
+
 const initialPrompts = function () {
     inquirer
         .prompt([
@@ -53,32 +56,7 @@ const managerPrompts = function () {
         ])
         .then((data) => {
             const manager = new Manager(data.name, data.id, data.email, data.office);
-            // Create HTML
-            const main = document.querySelector('<main>');
-            const employeeCard = document.createElement('div').setAttribute('class', 'employee');
-            const cardHeader = document.createElement('div').setAttribute('class', 'card-header');
-            const name = document.createElement('h2').setAttribute('class', 'name');
-            const occupation = document.createElement('h2').setAttribute('class', 'occupation');
-            const cardInfo = document.createElement('div').setAttribute('class', 'info');
-            const id = document.createElement('p').setAttribute('class', 'id');
-            const email = document.createElement('p').setAttribute('class', 'email');
-            const other = document.createElement('p').setAttribute('class', 'other');
-            // Change content within HTML
-            name.textContent = `manager.name`;
-            occupation.textContent = `Manager`;
-            id.textContent = `manager.id`;
-            email.textContent = `manager.email`;
-            office.textContent = `manager.office`;
-            // Organize HTML
-            cardHeader.appendChild(name);
-            cardHeader.appendChild(occupation);
-            cardInfo.appendChild(id);
-            cardInfo.appendChild(email);
-            cardInfo.appendChild(other);
-            employeeCard.appendChild(cardHeader);
-            employeeCard.appendChild(cardInfo);
-            // Append HTML to main
-            main.appendChild(employeeCard);
+            employeeArray.push(manager);
             // Reinitiates prompt loop
             addEmployee();
         })
@@ -112,7 +90,7 @@ const engineerPrompts = function () {
         ])
         .then((data) => {
             const engineer = new Engineer(data.name, data.id, data.email, data.github);
-
+            employeeArray.push(engineer);
             // Reinitiates prompt loop
             addEmployee();
         })
@@ -144,7 +122,7 @@ const internPrompts = function () {
         ])
         .then((data) => {
             const intern = new Intern(data.name, data.id, data.email, data.school);
-
+            employeeArray.push(manager);
             // Reinitiates prompt loop
             addEmployee();
         })
@@ -164,7 +142,19 @@ const addEmployee = function () {
             if (data.add == 'Yes') {
                 initialPrompts();
             } else {
-                console.log("Data has been logged")
+                sendData(JSON.stringify(employeeArray))
             }
         })
+}
+
+// export { employeeArray };
+
+const sendData = function (data) {
+    fs.appendFile("dist/render.js", data, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Data has been logged");
+        }
+    });
 }
